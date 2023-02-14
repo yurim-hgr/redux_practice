@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>redux</title>
+    <meta charset="UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.1/redux.js"></script>
+  </head>
+  <body>
+    <h1>Vanilla JS redux</h1>
+    <span class="count">0</span>
+    <button class="add">add</button>
+    <button class="minus">minus</button>
+
+    <script>
+      const addBtn = document.querySelector(".add");
+      const minusBtn = document.querySelector(".minus");
+      const count = document.querySelector(".count");
+
+      const ADD = "increase";
+      const MINUS = "decrease";
+
+      const reducer = (state = 0, action) => {
+        console.log(state, action);
+
+        switch (action.type) {
+          case ADD:
+            return state + 1;
+          case MINUS:
+            return state - 1;
+          default:
+            return state;
+        }
+      };
+      const countStore = Redux.createStore(reducer);
+
+      countStore.subscribe(() => {
+        console.log("countStore is changed!", countStore.getState());
+        count.innerHTML = countStore.getState();
+      });
+
+      addBtn.addEventListener("click", () => {
+        countStore.dispatch({ type: ADD });
+      });
+      minusBtn.addEventListener("click", () => {
+        countStore.dispatch({ type: MINUS });
+      });
+    </script>
+  </body>
+</html>

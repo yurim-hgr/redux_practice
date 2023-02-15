@@ -19,23 +19,33 @@
       const ADD = "increase";
       const MINUS = "decrease";
 
-      const reducer = (state = 0, action) => {
-        console.log(state, action);
-
+      const reducer = (state , action) => {
+        if (state === undefined) {
+          return { cnt : 0};
+        }
+        let newState;
+        
+        const cnt = state.cnt;
         switch (action.type) {
           case ADD:
-            return state + 1;
+            newState = Object.assign({}, state, { cnt: cnt + 1 });
+            console.log(state, action , newState);
+            return newState;
           case MINUS:
-            return state - 1;
+            newState = Object.assign({}, state, { cnt: cnt - 1 });
+            console.log(state, action , newState);
+            return newState;
           default:
             return state;
         }
       };
-      const countStore = Redux.createStore(reducer);
+      const countStore = Redux.createStore(reducer
+      ,
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
       countStore.subscribe(() => {
         console.log("countStore is changed!", countStore.getState());
-        count.innerHTML = countStore.getState();
+        count.innerHTML = countStore.getState().cnt;
       });
 
       addBtn.addEventListener("click", () => {

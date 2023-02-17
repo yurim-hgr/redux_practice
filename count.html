@@ -27,6 +27,8 @@
         
         const cnt = state.cnt;
         switch (action.type) {
+          // ...state 해서 복제하는 방법도 있음 
+          
           case ADD:
             newState = Object.assign({}, state, { cnt: cnt + 1 });
             console.log(state, action , newState);
